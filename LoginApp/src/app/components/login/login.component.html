@@ -1,0 +1,35 @@
+  <div class="login-form">
+    <div class="card m-3">
+      <div *ngIf="userProfile | async">
+        <h3 class="card-header">Howdy, {{userProfile.id | async}}</h3>
+      </div>
+      <div class="card-bod">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="@domain.com" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors }" required />
+            <div *ngIf="f.email.touched && f.email.invalid" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col">
+              <label>Password</label>
+              <input type="password" placeholder="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors }" />
+              <div *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+                <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary mr-1 btn-block">Log in</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
