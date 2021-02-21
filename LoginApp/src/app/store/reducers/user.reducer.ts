@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { Action, createReducer, on } from '@ngrx/store';
-import * as LoginAction from '../actions/user.action';
 import { UserLogin, UserProfile } from '../../models/user.model';
 import { Statuses } from '../../shared/app.constants';
 import { AppState } from '../../shared/app.state';
+import * as userActions from "../actions/user.action";
+
 
 export interface UserState {
   data: UserProfile[];
@@ -19,21 +19,32 @@ export namespace UsersQuery {
   export const getUser = (state: AppState) => state.userProfile;
 }
 
-export function userReducer(state: UserState = initialState, action: LoginAction.Actions) {
+export function userReducer(state: UserState = initialState, action: userActions.Actions) {
   switch (action.type) {
-    case LoginAction.GET_USER:
+    case userActions.GET_USER:
       return { state, status: Statuses.LOADING }
 
-    case LoginAction.LOGIN_USER:
+    case userActions.LOGIN_USER:
       var arr = { ...state, data: action.payload, status: Statuses.SUCCESS } 
       console.log('reducer', arr.data, state)
       return arr
-    case LoginAction.AUTH_ERROR:
+    case userActions.AUTH_ERROR:
       return { ...state, data: action.payload, status: Statuses.ERROR }
     default:
       return state;
 
-  }
+  } 
 
 }
+
+//const user = createReducer(
+//  initialState,
+//  on(userActions.GetUser, (state) => {
+//    return { state, status: Statuses.LOADING };
+//  }),
+//);
+
+//export function userReducer(state: UserState | undefined, action: Action) {
+//  return user(state, action);
+//}
 

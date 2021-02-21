@@ -24,7 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    StoreModule.forRoot({ user: userReducer }, {}),
+    StoreModule.forRoot({ user: userReducer}),
     EffectsModule.forRoot([UserEffects]),
     ReactiveFormsModule,
     HttpClientModule

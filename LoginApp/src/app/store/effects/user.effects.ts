@@ -24,36 +24,6 @@ export class UserEffects {
     private http: HttpClient
   ) { }
 
-  //@Effect() getUser$: Observable<userActions> = this.actions$.ofType(userActions.GET_USER)
-  //  .map((action: userActions.GetUser) => action.payload)
-  //  .switchMap(payload => this.service.getUser())
-  //  .delay(2000) // delay to show loading spinner, delete me!
-  //  .map(data => {
-  //    if (data) {
-  //      /// User logged in
-  //      const user = <UserProfile>data;
-  //      return new userActions.LoginUser(data);
-  //    } else {
-  //      /// User not logged in
-  //      return new userActions.NotAuthenticated();
-  //    }
-
-  //  })
-  //  .catch(err => Observable.of(new userActions.AuthError()));
-
-  //getProfile$ = createEffect(() => this.actions$.pipe(
-  //  ofType(userActions.GET_USER),
-  //  switchMap((action) => {
-  //    var payload = action["payload"];
-  //    var arr = this.service.getUser(payload['email'], payload['password']).pipe(
-  //      mergeMap((data: UserProfile[]) => [new userActions.LoginUser(data)]),
-  //      catchError((err: Error) => of(new userActions.AuthError(err))) //make authError!
-  //    );
-
-  //    return arr;
-  //  })
-  //));
-
   @Effect()
   getProfile$ = this.actions$.pipe(
     ofType<userActions>(userActions.GET_USER),
@@ -70,5 +40,25 @@ export class UserEffects {
     this.store.dispatch(new userActions.GetUser(payload));
     return this.user$;
   }
+
+
+  //new
+  //@Effect()
+  //getProfile$ = this.actions$.pipe(
+  //  ofType(userActions.GetUser),
+  //  map(action => action["payload"]),
+  //  switchMap(payload => this.service.getUser(payload['email'], payload['password'])),
+  //  map(data => {
+  //    if (data.length > 0)
+  //      return userActions.LoginUser({ data })
+  //    else return userActions.AuthError();
+  //  }
+  //  ));
+
+
+  //login(data: UserLogin) {
+  //  this.store.dispatch(userActions.GetUser({ data }));
+  //  return this.user$;
+  //}
 
 }

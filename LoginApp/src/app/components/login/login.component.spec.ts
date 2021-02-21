@@ -7,6 +7,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from '../../store/effects/user.effects';
 import { CommonService } from '../../services/common.service';
 import { HttpClientModule } from '@angular/common/http';
+import { userReducer } from '../../store/reducers/user.reducer';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,7 +15,7 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({}),
+      imports: [StoreModule.forRoot({ user: userReducer }),
         EffectsModule.forRoot([UserEffects]),
         FormsModule,
         ReactiveFormsModule,

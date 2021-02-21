@@ -3,13 +3,18 @@ import { createAction, props, Action } from '@ngrx/store';
 import { UserLogin, UserProfile } from '../../models/user.model';
 import { CommonService } from '../../services/common.service';
 
+//const TYPE = '[Auth]';
+//export const GetUser = createAction(`${TYPE} Get User`, props<{ data: UserLogin }>());
+//export const LoginUser = createAction(`${TYPE} Authenticated`, props<{ data: UserProfile[] }>());
+//export const NotAuthenticated = createAction(`${TYPE} Not Authenticated`);
+//export const AuthError = createAction(`${TYPE} Error`);
+
+//old version
 
 export const GET_USER = '[Auth] Get User';
 export const LOGIN_USER = '[Auth] Authenticated';
 export const NOT_AUTHENTICATED = '[Auth] Not Authenticated';
 export const AUTH_ERROR = '[Auth] Error';
-
-//export const Login = createAction('${TYPE}', props<{ params: User }>());
 
 export class GetUser implements Action {
   readonly type: string = GET_USER;

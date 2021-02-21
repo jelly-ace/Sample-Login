@@ -1,10 +1,10 @@
+import {ActionReducerMap} from '@ngrx/store';
+import {userReducer, UserState} from './user.reducer';
 
-import { AppState } from '../../shared/app.state';
-import { createSelector } from '@ngrx/store';
-import { UsersQuery } from './user.reducer';
-import { UserLogin } from '../../models/user.model';
+interface AppState {
+  user: UserState;
+}
 
-//export const getLoggedIn = createSelector(
-//  UsersQuery.getUser,
-//  (user: UserLogin) => { }
-//);
+export const reducers: ActionReducerMap<AppState> = {
+  user: userReducer,
+};
