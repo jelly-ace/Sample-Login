@@ -1,9 +1,15 @@
   <div class="login-form">
     <div class="card m-3">
-      <div *ngIf="userProfile | async">
-        <h3 class="card-header">Howdy, {{userProfile.id | async}}</h3>
+      <div *ngIf="successLoading$ | async ">
+        <h3 class="card-header">Howdy!</h3>
       </div>
-      <div class="card-bod">
+      <div *ngIf="errorLoading$ | async ">
+        <h3 class="card-header">No User Found :(</h3>
+      </div>
+      <div *ngIf="isLoading$ | async ">
+        <h3 class="card-header">Loading...</h3>
+      </div>
+      <div class="card-body">
         <form [formGroup]="loginForm" (ngSubmit)="login()">
 
           <div class="form-group">

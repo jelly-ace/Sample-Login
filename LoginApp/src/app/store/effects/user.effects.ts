@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-
-import { Action } from '@ngrx/store';
-
-import { Observable, pipe, of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
 
 import { AppState } from '../../shared/app.state';
 import { UserLogin, UserProfile } from '../../models/user.model';
@@ -45,58 +41,30 @@ export class UserEffects {
   //  })
   //  .catch(err => Observable.of(new userActions.AuthError()));
 
-  //@Effect()
-  //getClusterInfo = this.actions$
-  //    .pipe(
-  //      ofType(userActions.GET_USER),
-  //    switchMap((action) => {
-  //      return this.service.getUser(action.email, action.payload.password).pipe(
-  //        map((data: UserProfile) => new userActions.LoginUser(data)),
-  //        catchError((err: Error) => of(new userActions.AuthError(err))),
-  //      );
-  //    })
-  //);
-
-  getProfile$ = createEffect(() => this.actions$.pipe(
-    ofType(userActions.GET_USER),
-    switchMap((action) => {
-      var payload = action["payload"];
-      return this.service.getUser(payload['email'], payload['password']).pipe(
-        map((data: UserProfile[]) => new userActions.LoginUser(data)),
-        catchError((err: Error) => of(new userActions.AuthError(err))) //make authError!
-      );
-    })
-  ));
-
-
-  //@Effect()
-  //getProfiles$ = this.actions$.pipe(
+  //getProfile$ = createEffect(() => this.actions$.pipe(
   //  ofType(userActions.GET_USER),
   //  switchMap((action) => {
   //    var payload = action["payload"];
-  //    return this.http.get<UserProfile[]>('/assets/users.json')
-  //      .pipe(
-  //        map((items) => {
-  //          var profile = items.filter(item => item.login.email === payload['email'] && item.login.password === payload['password']);
-  //          if (profile.length > 0)
-  //            new userActions.LoginUser(profile);
-  //          else
-  //            new userActions.NotAuthenticated();
-  //        })
-  //      )
-  //  })
-  //);
+  //    var arr = this.service.getUser(payload['email'], payload['password']).pipe(
+  //      mergeMap((data: UserProfile[]) => [new userActions.LoginUser(data)]),
+  //      catchError((err: Error) => of(new userActions.AuthError(err))) //make authError!
+  //    );
 
-  //@Effect() getUser$: Observable<userActions> = this.actions$.pipe(
-  //  ofType(userActions.GET_USER),
-  //  mergeMap(() => this.service.getUser('','').pipe(
-  //    map(user => {
-  //      var data: UserProfile = user;
-  //      new userActions.LoginUser(data)
-  //    }),
-  //    catchError(error => throwError(error))
-  //  ))
-  //)
+  //    return arr;
+  //  })
+  //));
+
+  @Effect()
+  getProfile$ = this.actions$.pipe(
+    ofType<userActions>(userActions.GET_USER),
+    map(action => action["payload"]),
+    switchMap(payload => this.service.getUser(payload['email'], payload['password'])),
+    map(response => {
+      if (response.length > 0)
+        return new userActions.LoginUser(response)
+      else return new userActions.AuthError();
+    }
+    ));
 
   login(payload: UserLogin) {
     this.store.dispatch(new userActions.GetUser(payload));

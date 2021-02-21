@@ -6,7 +6,7 @@ import { Statuses } from '../../shared/app.constants';
 import { AppState } from '../../shared/app.state';
 
 export interface UserState {
-  data: UserProfile;
+  data: UserProfile[];
   status: Statuses
 }
 
@@ -19,16 +19,21 @@ export namespace UsersQuery {
   export const getUser = (state: AppState) => state.userProfile;
 }
 
-export function userReducer(state: UserState[], action: LoginAction.Actions) {
+export function userReducer(state: UserState = initialState, action: LoginAction.Actions) {
   switch (action.type) {
     case LoginAction.GET_USER:
-      return [state, action.payload, status = Statuses.LOADING]
+      return { state, status: Statuses.LOADING }
 
     case LoginAction.LOGIN_USER:
-      return { ...state, data: action.payload, status: Statuses.SUCCESS }
-
+      var arr = { ...state, data: action.payload, status: Statuses.SUCCESS } 
+      console.log('reducer', arr.data, state)
+      return arr
+    case LoginAction.AUTH_ERROR:
+      return { ...state, data: action.payload, status: Statuses.ERROR }
     default:
       return state;
+
   }
+
 }
 

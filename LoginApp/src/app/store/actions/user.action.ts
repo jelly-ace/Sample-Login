@@ -21,7 +21,7 @@ export class GetUser implements Action {
 export class LoginUser implements Action {
   readonly type: string = LOGIN_USER;
   constructor(public payload: UserProfile[]) {
-    console.log('login', payload);
+    console.log('action login', payload);
     CommonService.setUserProfile(payload);
   }
 }
