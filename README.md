@@ -1,14 +1,14 @@
 # Sample-Login
 
 ## Key points to improve:
-1. instead of using helper or service like (common.service.ts) utilize the ngrx functionality only specially for retrieving AppState data.
-2. Utilize ngrx store state selectors.
-3. code refractor for ngrx store reducers, actions, effects and selectors
-4. implement auth tokens for a better login app
-5. improve unit test for components to utilize TestBeds and mock
-6. improve design to cater web accessibility using wai-aria for a better login app
-7. login page lacks animations, this is for further improvement
-8. remove comments for a much cleaner code (ps. comments are just for future reference incase of refractoring)
+1. Instead of using helper or service like (common.service.ts) utilize the ngrx functionality only specially for retrieving AppState data.
+2. Utilize ngrx store state selectors for data selection.
+3. Code refractor for ngrx store reducers, actions, effects and selectors since code uses the long formatting.(Commented codes are available for future reference incase of refractoring.)
+4. May implement auth tokens for a better login app.
+5. Improve unit test for components to utilize TestBeds and mocks.
+6. Improve design to cater web accessibility using wai-aria for a better user experience.
+7. Login page lacks animations, this is for further improvement also.
+
 
 ## Development server
 
@@ -19,6 +19,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 You can test with the following login credentials:
+
 email: sample@domain.com
 password: 123456
 
