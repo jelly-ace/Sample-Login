@@ -29,7 +29,9 @@ export function userReducer(state: UserState = initialState, action: userActions
       console.log('reducer', arr.data, state)
       return arr
     case userActions.AUTH_ERROR:
-      return { ...state, data: action.payload, status: Statuses.ERROR }
+      return { ...state, status: Statuses.ERROR }
+    case userActions.NOT_AUTHENTICATED:
+      return { ...state, status: Statuses.NOTAUTHENTICATED }
     default:
       return state;
 

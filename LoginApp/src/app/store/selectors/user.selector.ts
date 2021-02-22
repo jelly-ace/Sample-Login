@@ -18,3 +18,8 @@ export const isError = createSelector(
   userState,
   (state: UserState) => state.status === Statuses.ERROR
 );
+
+export const isNotAuthenticated = createSelector(
+  userState,
+  (state: UserState) => state.status === Statuses.NOTAUTHENTICATED
+);

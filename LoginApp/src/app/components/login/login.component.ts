@@ -8,7 +8,7 @@ import { UserLogin, UserProfile } from '../../models/user.model';
 import { FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { UserEffects } from '../../store/effects/user.effects';
 import { CommonService } from '../../services/common.service';
-import { isLoading, isError, isSuccess } from '../../store/selectors/user.selector';
+import { isLoading, isError, isSuccess, isNotAuthenticated } from '../../store/selectors/user.selector';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   isLoading$ = this.store$.pipe(select(isLoading));
   successLoading$ = this.store$.pipe(select(isSuccess));
   errorLoading$ = this.store$.pipe(select(isError));
+  notAuthenticated$ = this.store$.pipe(select(isNotAuthenticated));
 
   get f() { return this.loginForm.controls; }
 

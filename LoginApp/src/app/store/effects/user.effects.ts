@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { of, Observable } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { of, Observable, throwError } from 'rxjs';
+import { catchError, map, switchMap, mergeMap, concatMap } from 'rxjs/operators';
 
 import { AppState } from '../../shared/app.state';
 import { UserLogin, UserProfile } from '../../models/user.model';
@@ -27,38 +27,25 @@ export class UserEffects {
   @Effect()
   getProfile$ = this.actions$.pipe(
     ofType<userActions>(userActions.GET_USER),
-    map(action => action["payload"]),
-    switchMap(payload => this.service.getUser(payload['email'], payload['password'])),
-    map(response => {
-      if (response.length > 0)
-        return new userActions.LoginUser(response)
-      else return new userActions.AuthError();
-    }
-    ));
+    map(action => action["payload"])
+    ,switchMap(payload => this.service.getUser(payload['email'], payload['password']).pipe(
+      map((response) => {
+        return new userActions.LoginUser(response);
+      })
+      ,catchError((err: Error) => {
+        return throwError(err)
+      })
+      , catchError((err: Error) => {
+        if (err.message === 'Incorrect password') return of(new userActions.NotAuthenticated());
+        if (err.message === 'No user found') return of(new userActions.AuthError());
+      })
+    ))
+    
+  );
 
   login(payload: UserLogin) {
     this.store.dispatch(new userActions.GetUser(payload));
     return this.user$;
   }
-
-
-  //new
-  //@Effect()
-  //getProfile$ = this.actions$.pipe(
-  //  ofType(userActions.GetUser),
-  //  map(action => action["payload"]),
-  //  switchMap(payload => this.service.getUser(payload['email'], payload['password'])),
-  //  map(data => {
-  //    if (data.length > 0)
-  //      return userActions.LoginUser({ data })
-  //    else return userActions.AuthError();
-  //  }
-  //  ));
-
-
-  //login(data: UserLogin) {
-  //  this.store.dispatch(userActions.GetUser({ data }));
-  //  return this.user$;
-  //}
 
 }
