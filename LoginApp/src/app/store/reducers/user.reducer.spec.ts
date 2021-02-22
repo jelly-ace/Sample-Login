@@ -40,7 +40,7 @@ describe('UserReducer', () => {
       const newState: Array<UserProfile> = [];
       const action = new AuthError();
       const state = fromReducer.userReducer(initialState, action);
-      expect(state["data"]).toEqual(undefined);
+      expect(state["status"]).toEqual(Statuses.ERROR);
     });
 
     it('should get user profile and start loading', () => {
